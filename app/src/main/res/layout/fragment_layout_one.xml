@@ -16,7 +16,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome!"
+        android:text="@string/fragOneTitle"
         android:textSize="20dp"
         android:id="@+id/textView"
         android:layout_marginTop="47dp"
@@ -26,7 +26,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You are seeing these pages as this is the first time you have logged into this up. In future you will be logged in automatically."
+        android:text="@string/fragmentOneContent"
         android:id="@+id/textView2"
         android:textSize="17dp"
         android:textAlignment="center"

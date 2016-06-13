@@ -18,6 +18,12 @@ public class PagerAdapter extends FragmentPagerAdapter{
                 return new FragmentOne();
             case 1:
                 return new FragmentTwo();
+            case 2:
+                return new FragmentThree();
+            case 3:
+                return new FragmentFour();
+            case 4:
+                return new FragmentFive();
             default:
                 break;
         }
