@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageView3"
         android:src="@drawable/web_server_logo"
-        android:layout_below="@+id/textView3"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -31,7 +31,8 @@
         android:textSize="15dp"
         android:id="@+id/textView4"
         android:layout_below="@+id/imageView3"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 

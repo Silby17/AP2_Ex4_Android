@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/fragOneTitle"
-        android:textSize="20dp"
+        android:textSize="30dp"
         android:id="@+id/textView"
         android:layout_marginTop="47dp"
         android:layout_alignParentTop="true"
