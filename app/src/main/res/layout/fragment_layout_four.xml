@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="196dp"
+        android:layout_height="46dp"
         android:text="@string/fragFourTitle"
-        android:textSize="20dp"
+        android:textSize="30dp"
         android:id="@+id/textView3"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -20,7 +21,8 @@
         android:id="@+id/imageView3"
         android:src="@drawable/flags"
         android:layout_below="@+id/textView3"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_vertical" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -30,9 +32,11 @@
         android:textSize="15dp"
         android:id="@+id/textView4"
         android:layout_below="@+id/imageView3"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="105dp" />
 
 
 
 
-</LinearLayout>
+</RelativeLayout>
