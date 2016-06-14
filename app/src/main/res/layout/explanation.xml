@@ -2,19 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
-    <me.relex.circleindicator.CircleIndicator
-        android:id="@+id/indicator"
+    <com.kassisdion.library.ViewPagerWithIndicator
+        app:arrow.enable="true"
+        app:arrow.width="10dip"
+        app:arrow.height="550dip"
+        app:round.enable="true"
+        app:round.size="15dip"
+        app:round.drawable="@drawable/background_rounded"
+        app:round.color.default="@android:color/white"
+        app:round.color.selected="@android:color/holo_blue_light"
+        android:id="@+id/viewPagerWithIndicator"
         android:layout_width="match_parent"
-        android:layout_height="48dp"/>
+        android:layout_height="match_parent">
+    </com.kassisdion.library.ViewPagerWithIndicator>
 
-
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:id="@+id/btnSkip"
+        android:text="Skip"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>
