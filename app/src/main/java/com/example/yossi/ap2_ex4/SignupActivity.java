@@ -1,5 +1,6 @@
 package com.example.yossi.ap2_ex4;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ViewUtils;
@@ -27,6 +28,8 @@ public class SignupActivity extends AppCompatActivity {
                         name.getText().toString().equals("") || email.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "You did not enter in all your info", Toast.LENGTH_SHORT).show();
                 }
+                startActivity(new Intent(SignupActivity.this, MessageActivity.class));
+
             }
         });
     }

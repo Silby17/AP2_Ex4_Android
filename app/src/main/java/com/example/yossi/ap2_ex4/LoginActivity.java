@@ -1,5 +1,6 @@
 package com.example.yossi.ap2_ex4;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -11,8 +12,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
+
     SharedPreferences mPrefs;
     final String welcomeScreenShownPref = "welcomeScreenShown";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,42 +24,38 @@ public class LoginActivity extends AppCompatActivity {
         // second argument is the default to use if the preference can't be found
         Boolean welcomeScreenShown = mPrefs.getBoolean(welcomeScreenShownPref, false);
 
+        //First time on app - intent to explanationActivity
         if (!welcomeScreenShown) {
-            // here you can launch another activity if you like
-            // the code below will display a popup
-
-            String whatsNewTitle = getResources().getString(R.string.app_name);
-            String whatsNewText = getResources().getString(R.string.app_name);
-            new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).
-                    setTitle(whatsNewTitle).setMessage(whatsNewText).setPositiveButton(
-                    R.string.app_name, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    }).show();
+            startActivity(new Intent(LoginActivity.this, ExplanationActivity.class));
+            //figure it out how to come back to this page
             SharedPreferences.Editor editor = mPrefs.edit();
             editor.putBoolean(welcomeScreenShownPref, true);
             editor.commit(); // Very important to save the preference
         }
+        //Secound time on app - intent to message
+        final Button btnSubmit = (Button) findViewById(R.id.btnSubmitLogin);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                EditText username = (EditText) findViewById(R.id.txtUsernameLogin);
+                EditText password = (EditText) findViewById(R.id.txtPasswordLogin);
 
-        final Button btnSubmit = (Button)findViewById(R.id.btnSubmitLogin);
-        btnSubmit.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                EditText username = (EditText)findViewById(R.id.txtUsernameLogin);
-                EditText password = (EditText)findViewById(R.id.txtPasswordLogin);
-
-                if(username.getText().toString().equals("") ||
-                        password.getText().toString().equals("")){
+                if (username.getText().toString().equals("") ||
+                        password.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "You did not enter in all your info",
                             Toast.LENGTH_SHORT).show();
                 }
+                startActivity(new Intent(LoginActivity.this, MessageActivity.class));
+            }
+        });
+
+        final Button btnResend = (Button) findViewById(R.id.btnLogin);
+        btnResend.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, LoginActivity.class));
             }
         });
     }
+
+
 }
-
-
-
-
-
 
