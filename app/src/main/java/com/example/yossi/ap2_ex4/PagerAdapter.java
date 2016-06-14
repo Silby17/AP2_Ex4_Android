@@ -11,6 +11,11 @@ public class PagerAdapter extends FragmentPagerAdapter{
         super(fm);
     }
 
+    /**********************************************************************
+     * This will have all the Fragments called on each swipe
+     * @param position
+     * @return
+     *********************************************************************/
     @Override
     public Fragment getItem(int position) {
         switch (position){
