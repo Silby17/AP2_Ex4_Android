@@ -28,8 +28,16 @@ public class SignupActivity extends AppCompatActivity {
                         name.getText().toString().equals("") || email.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "You did not enter in all your info", Toast.LENGTH_SHORT).show();
                 }
-                startActivity(new Intent(SignupActivity.this, MessageActivity.class));
+                else {
+                    startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                }
 
+            }
+        });
+        final Button btnResend = (Button) findViewById(R.id.btnReset);
+        btnResend.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(SignupActivity.this, SignupActivity.class));
             }
         });
     }

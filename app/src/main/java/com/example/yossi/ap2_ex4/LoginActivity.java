@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,16 +46,20 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "You did not enter in all your info",
                             Toast.LENGTH_SHORT).show();
                 }
-                startActivity(new Intent(LoginActivity.this, MessageActivity.class));
+                else {
+                    startActivity(new Intent(LoginActivity.this, MessageActivity.class));
+                }
             }
         });
 
         final Button btnResend = (Button) findViewById(R.id.btnLogin);
         btnResend.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, LoginActivity.class));
+                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
             }
         });
+       // ActionBar.LayoutParams params = new ActionBar.LayoutParams(Gravity.CENTER);
+       // getActionBar().setCustomView(v, params) .getCustomView().setLayoutParams(params);
     }
 
 
