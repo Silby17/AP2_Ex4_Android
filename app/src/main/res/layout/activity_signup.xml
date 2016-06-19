@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".SignupActivity">
+    tools:context=".SignupActivity"
+    android:background="#c9cad3">
 
     <EditText
         android:gravity="left"
@@ -81,35 +82,44 @@
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/txtEmail"
         android:layout_alignStart="@+id/txtEmail" />
-
-    <RadioButton android:button="@drawable/rednose"
-        android:layout_width="wrap_content"
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rednose"
-        android:onClick="onRadioButtonClicked"
-        android:layout_alignBottom="@+id/redface"
-        android:layout_toRightOf="@+id/redface"
-        android:checked="false"
-        android:layout_alignRight="@+id/btnSubmit"
-        android:layout_alignEnd="@+id/btnSubmit" />
-
-    <RadioButton android:button="@drawable/redface"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/redface"
-        android:onClick="onRadioButtonClicked"
+        android:orientation="horizontal"
         android:layout_below="@+id/txtEmail"
-        android:layout_toLeftOf="@+id/btnSubmit"
-        android:layout_toStartOf="@+id/btnSubmit" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
 
-    <RadioButton android:button="@drawable/panda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/panda"
-        android:onClick="onRadioButtonClicked"
-        android:layout_below="@+id/txtEmail"
-        android:layout_toLeftOf="@+id/redface"
-        android:layout_toStartOf="@+id/redface" />
+        <RadioButton android:id="@+id/panda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/panda"
+            android:onClick="onRadioButtonClicked"
+            android:checked="false"
+            android:layout_below="@+id/txtEmail"
+            android:layout_alignLeft="@+id/btnSubmit"
+            android:layout_alignStart="@+id/btnSubmit" />
+
+        <RadioButton android:id="@+id/rednose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/rednose"
+            android:onClick="onRadioButtonClicked"
+            android:checked="false"
+            android:layout_alignTop="@+id/panda"
+            android:layout_toLeftOf="@+id/panda"
+            android:layout_toStartOf="@+id/panda" />
+
+        <RadioButton android:id="@+id/redface"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/redface"
+            android:onClick="onRadioButtonClicked"
+            android:checked="false"
+            android:layout_alignTop="@+id/rednose"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+    </RadioGroup>
 
 
 </RelativeLayout>

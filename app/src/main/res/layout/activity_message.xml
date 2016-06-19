@@ -7,24 +7,24 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context=".MessageActivity">
+        tools:context=".MessageActivity"
+    android:background="#c9cad3">
     <EditText
         android:gravity="left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/txtMessage"
-        android:hint="Email"
+        android:id="@+id/Message"
+        android:hint="@string/Message"
         android:layout_above="@+id/btnSend"
         android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send"
+        android:text="@string/Send"
         android:id="@+id/btnSend"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/txtMessage"
-        android:layout_alignStart="@+id/txtMessage" />
+        android:layout_alignLeft="@+id/Message"
+        android:layout_alignStart="@+id/Message" />
 </RelativeLayout>
