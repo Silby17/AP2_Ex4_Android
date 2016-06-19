@@ -9,6 +9,7 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
     <com.kassisdion.library.ViewPagerWithIndicator
         app:arrow.enable="true"
         app:arrow.width="10dip"
@@ -21,6 +22,11 @@
         android:id="@+id/viewPagerWithIndicator"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Skip"
+            android:id="@+id/btnSkip"/>
     </com.kassisdion.library.ViewPagerWithIndicator>
 
 </LinearLayout>
