@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,11 +13,30 @@
 
 
     <EditText
+=======
+                android:windowSoftInputMode="adjustResize"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:gravity="center"
+                tools:context=".LoginActivity">
+
+    <EditText
+        android:inputType="none"
+>>>>>>> origin/yossiB1
         android:gravity="left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtUsernameLogin"
+<<<<<<< HEAD
         android:layout_marginTop="114dp"
+=======
+        android:layout_marginTop="5dp"
+>>>>>>> origin/yossiB1
         android:hint="Username"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/txtPasswordLogin"

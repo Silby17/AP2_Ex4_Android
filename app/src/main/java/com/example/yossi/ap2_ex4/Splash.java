@@ -1,6 +1,7 @@
 package com.example.yossi.ap2_ex4;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
