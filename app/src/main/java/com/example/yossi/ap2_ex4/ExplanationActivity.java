@@ -1,4 +1,5 @@
 package com.example.yossi.ap2_ex4;
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -10,8 +11,8 @@ import android.os.Bundle;
  * This Class will display the page viewer of the 5 explanation fragments
  ***************************************************************************/
 public class ExplanationActivity extends FragmentActivity {
-    ViewPager viewPager;
-    PagerAdapter adapter;
+    private ViewPager viewPager;
+    private PagerAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
