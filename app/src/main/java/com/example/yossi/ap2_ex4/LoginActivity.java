@@ -1,34 +1,36 @@
 package com.example.yossi.ap2_ex4;
-<<<<<<< HEAD
-import android.content.DialogInterface;
-=======
 
->>>>>>> origin/yossiB1
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-<<<<<<< HEAD
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-=======
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.DataOutput;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.Buffer;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
->>>>>>> origin/yossiB1
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -53,20 +55,6 @@ public class LoginActivity extends AppCompatActivity {
         }
         //Secound time on app - intent to message
         final Button btnSubmit = (Button) findViewById(R.id.btnSubmitLogin);
-<<<<<<< HEAD
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                EditText username = (EditText) findViewById(R.id.txtUsernameLogin);
-                EditText password = (EditText) findViewById(R.id.txtPasswordLogin);
-
-                if (username.getText().toString().equals("") ||
-                        password.getText().toString().equals("")) {
-                    Toast.makeText(getApplicationContext(), "You did not enter in all your info",
-                            Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    startActivity(new Intent(LoginActivity.this, MessageActivity.class));
-=======
         assert btnSubmit != null;
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -78,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
                     sendToServer();
                 } catch (Exception e) {
                     e.printStackTrace();
->>>>>>> origin/yossiB1
                 }
             }
         });
@@ -89,15 +76,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, SignupActivity.class));
             }
         });
-<<<<<<< HEAD
-       // ActionBar.LayoutParams params = new ActionBar.LayoutParams(Gravity.CENTER);
-       // getActionBar().setCustomView(v, params) .getCustomView().setLayoutParams(params);
-    }
-
-
-}
-
-=======
         // ActionBar.LayoutParams params = new ActionBar.LayoutParams(Gravity.CENTER);
         // getActionBar().setCustomView(v, params) .getCustomView().setLayoutParams(params);
     }
@@ -140,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         thread.start();
+
+
     }
 }
->>>>>>> origin/yossiB1
