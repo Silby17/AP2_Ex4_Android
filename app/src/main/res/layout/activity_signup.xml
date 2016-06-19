@@ -10,6 +10,7 @@
     tools:context=".SignupActivity">
 
     <EditText
+        android:gravity="left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtUsername"
@@ -22,6 +23,7 @@
         android:hint="Username" />
 
     <EditText
+        android:gravity="left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
@@ -32,25 +34,36 @@
         android:hint="Password" />
 
     <Button
+        android:gravity="left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"
         android:id="@+id/btnSubmit"
-        android:layout_below="@+id/txtEmail"
+        android:layout_alignTop="@+id/btnReset"
         android:layout_alignRight="@+id/txtEmail"
         android:layout_alignEnd="@+id/txtEmail" />
 
     <EditText
+        android:gravity="left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:hint="Name"
         android:ems="10"
         android:id="@+id/txtName"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    </RadioGroup>
+
     <EditText
+        android:gravity="left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
@@ -65,8 +78,38 @@
         android:layout_height="wrap_content"
         android:text="Reset"
         android:id="@+id/btnReset"
-        android:layout_below="@+id/txtEmail"
+        android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/txtEmail"
         android:layout_alignStart="@+id/txtEmail" />
+
+    <RadioButton android:button="@drawable/rednose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rednose"
+        android:onClick="onRadioButtonClicked"
+        android:layout_alignBottom="@+id/redface"
+        android:layout_toRightOf="@+id/redface"
+        android:checked="false"
+        android:layout_alignRight="@+id/btnSubmit"
+        android:layout_alignEnd="@+id/btnSubmit" />
+
+    <RadioButton android:button="@drawable/redface"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/redface"
+        android:onClick="onRadioButtonClicked"
+        android:layout_below="@+id/txtEmail"
+        android:layout_toLeftOf="@+id/btnSubmit"
+        android:layout_toStartOf="@+id/btnSubmit" />
+
+    <RadioButton android:button="@drawable/panda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/panda"
+        android:onClick="onRadioButtonClicked"
+        android:layout_below="@+id/txtEmail"
+        android:layout_toLeftOf="@+id/redface"
+        android:layout_toStartOf="@+id/redface" />
+
 
 </RelativeLayout>

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AP2_Ex4</string>
     <string name="welcome">Welcome to our app</string>
+    <string name="connect">We will connect you to server </string>
     <string name="fun">We hope you have fun</string>
     <string name="tell">Tell your Friends</string>
     <string name="come_back">Come Back Soon!</string>
@@ -17,4 +18,8 @@
 
     <string name="fragFiveTitle">Web Server</string>
     <string name="fragFiveContent">All of the running of this app will be done while connected to our Web Server</string>
+
+    <string name="Message">write your message here</string>
+    <string name="Send">Send</string>
+
 </resources>
