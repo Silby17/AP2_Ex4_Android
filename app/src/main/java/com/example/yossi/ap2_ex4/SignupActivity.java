@@ -7,6 +7,7 @@ import android.support.v7.widget.ViewUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 public class SignupActivity extends AppCompatActivity {
@@ -15,6 +16,11 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        RadioButton panda = (RadioButton)findViewById(R.id.panda);
+        RadioButton rednose = (RadioButton)findViewById(R.id.rednose);
+        RadioButton redface = (RadioButton)findViewById(R.id.redface);
+
+
 
         final Button btnSubmit = (Button)findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(new View.OnClickListener(){
