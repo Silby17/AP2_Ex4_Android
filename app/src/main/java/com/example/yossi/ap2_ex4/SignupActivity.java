@@ -47,8 +47,8 @@ public class SignupActivity extends AppCompatActivity {
         });
 
 
-        final Button btnSubmit = (Button)findViewById(R.id.btnSubmit);
-        btnSubmit.setOnClickListener(new View.OnClickListener(){
+        final Button btnSend = (Button)findViewById(R.id.btnSend);
+        btnSend.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 EditText username = (EditText)findViewById(R.id.txtUsername);
                 EditText password = (EditText)findViewById(R.id.txtPassword);

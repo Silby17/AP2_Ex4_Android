@@ -66,11 +66,11 @@ public class LoginActivity extends AppCompatActivity {
             editor.commit(); // Very important to save the preference
         }
         //Secound time on app - intent to message
-        final Button btnSubmit = (Button) findViewById(R.id.btnSubmitLogin);
-        assert btnSubmit != null;
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        final Button btnSend = (Button) findViewById(R.id.btnSendLogin);
+        assert btnSend != null;
+        btnSend.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.d("LoginActivity", "USER clicked SUBMIT BUTTON");
+                Log.d("LoginActivity", "USER clicked SEND BUTTON");
                 EditText username = (EditText) findViewById(R.id.txtUsernameLogin);
                 EditText password = (EditText) findViewById(R.id.txtPasswordLogin);
 

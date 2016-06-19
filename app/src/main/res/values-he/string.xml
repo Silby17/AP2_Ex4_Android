@@ -1,5 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--activity_message-->
+
     <string name="Message">כתוב את הודעתך כאן</string>
     <string name="Send">שלח</string>
+
+    <!--activity_login-->
+    <string name="Username">שם משתמש</string>
+    <string name="Password">סיסמא</string>
+
+    <!--activity_signup-->
+    <string name="Reset">אפס טופס</string>
+    <string name="Email">כתובת אימייל</string>
+    <string name="Name">שם</string>
+    <string name="app_name">תרגיל 4 - אפליקציה</string>
+
+    <!--splash-->
+    <string name="welcome">ברוכים הבאים לאפליקציה שלנו</string>
+    <string name="connect"> מיד תחוברו לשרת</string>
+    <string name="fun">מקווים שתהנו</string>
+    <string name="tell">ספרו לחברים</string>
+    <string name="come_back">נתראה בקרוב</string>
+
+    <!--fragment_layout_one-->
+    <string name="fragOneTitle">ברוכים הבאים</string>
+    <string name="fragmentOneContent">ברגע שהתחברת לאפליקציה, פרטיך ישמרו ולא תצטרך לבצע כניסה חוזרת</string>
+    <string name="fragTwoContent">כל המידע נשמר בשרת MYSQL</string>
+    <string name="fragTwoTitle">שרת MYSQL</string>
+
+    <!--fragment_layout_three-->
+    <string name="fragThreeTitle">הודעות</string>
+    <string name="fragThreeContent"> תוכל לשמור הודעות בשרת ולהציג את היסטוריית ההודעות שלך</string>
+
+    <!--fragment_layout_four-->
+    <string name="fragFourTitle">תמיכה בשפות</string>
+    <string name="fragFourContent">האפליקציה תומכת הן בעברית ובאנגלית</string>
+
+    <!--fragment_layout_five-->
+    <string name="fragFiveTitle">שרת אינטרנטי</string>
+    <string name="fragFiveContent">האפליקציה רצה בשרת אינטרנטי</string>
+
 </resources>

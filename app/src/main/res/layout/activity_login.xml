@@ -38,8 +38,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit"
-        android:id="@+id/btnSubmitLogin"
+        android:text="Send"
+        android:id="@+id/btnSendLogin"
         android:layout_below="@+id/txtPasswordLogin"
         android:layout_alignLeft="@+id/txtPasswordLogin"
         android:layout_alignStart="@+id/txtPasswordLogin" />
