@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -109,6 +110,9 @@ public class LoginActivity extends AppCompatActivity {
                             Log.e(TAG, error.getMessage());
                             error.printStackTrace();
                         }
+                        Toast.makeText(getApplicationContext(),
+                                R.string.errorWithServer, Toast.LENGTH_SHORT).show();
+                        //TODO close app
                     }
                 });
                     return null;
