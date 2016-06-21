@@ -48,7 +48,6 @@ public class Splash extends Activity{
 
         /**If This is not First time if app**/
         if (welcomeScreenShown) {
-            Log.d(TAG, "Not the First time in this screen");
             //Starts the animation on the Splash Screen
             final ImageView img = (ImageView) findViewById(R.id.imageView);
             final Animation anim = AnimationUtils.loadAnimation(getBaseContext(), R.anim.rotate);
@@ -71,7 +70,6 @@ public class Splash extends Activity{
                             communicator.loginPost(username, pass, new Callback<ResultResponse>() {
                                 @Override
                                 public void success(ResultResponse serverResponse, Response response2) {
-                                    Log.d("splash", "Success");
                                     //If the POST operation was successful we will check the response code
                                     if(serverResponse.getResult().equals("1")){
                                         Intent msg = new Intent(Splash.this, MessageActivity.class);
@@ -104,7 +102,6 @@ public class Splash extends Activity{
         /**This is the first time in the app**/
         else {
             /**Starts the animation in the splash screen**/
-            Log.d("Splash", "First time in app");
             final ImageView img = (ImageView) findViewById(R.id.imageView);
             final Animation anim = AnimationUtils.loadAnimation(getBaseContext(), R.anim.rotate);
             img.startAnimation(anim);
@@ -112,7 +109,6 @@ public class Splash extends Activity{
                 @Override
                 //Show the Required Toasts
                 public void onAnimationStart(final Animation animation) {
-                    Log.d("Splash", "On animation Start");
                     Toast.makeText(getApplicationContext(),
                             getResources().getString(R.string.welcome),
                             Toast.LENGTH_LONG).show();
@@ -129,7 +125,6 @@ public class Splash extends Activity{
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    Log.d("Splash", "onAniumationEnd");
                     //flag checked to mark that not first time in app
                     //figure it out how to come back to this page
                     SharedPreferences.Editor editor = preferences.edit();
@@ -139,7 +134,6 @@ public class Splash extends Activity{
                     Splash.this.startActivity(i);
                     finish();
                 }
-
                 @Override
                 public void onAnimationRepeat(Animation animation) {}
             });
