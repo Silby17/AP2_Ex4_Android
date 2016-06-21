@@ -5,26 +5,36 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.GestureDetector.OnGestureListener;
+import android.view.GestureDetector;
 
 
-/**
- * Created by Nava on 15/06/2016.
- */
-public class MessageActivity extends AppCompatActivity {
+public class MessageActivity extends AppCompatActivity implements OnGestureListener {
     private SensorManager sensorMgr;
     private ShakeListener listener;
     private Sensor accelerometer;
+    private OnSwipeTouchListener screenSwipListener;
+    TextView textview;
+    GestureDetector detector;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
-
+        //swipe
+        textview = new TextView(this);
+        textview.setText("Gesture Demo");
+        detector = new GestureDetector(this, this);
+        setContentView(textview);
         //setting name of app in center
         ActionBar ab = getSupportActionBar();
         TextView textview = new TextView(getApplicationContext());
@@ -40,7 +50,21 @@ public class MessageActivity extends AppCompatActivity {
         accelerometer = sensorMgr.getDefaultSensor(SensorManager.SENSOR_ACCELEROMETER);
         listener = new ShakeListener();
 
-    }
+//        //swipe
+//        screenSwipListener = new OnSwipeTouchListener(MessageActivity.this) {
+//            public void onSwipeTop() {
+//                Toast.makeText(MessageActivity.this, "top", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            public void onSwipeBottom() {
+//                Toast.makeText(MessageActivity.this, "bottom", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        View.setOnTouchListener(screenSwipListener);
+//
+   }
+
 
     @Override
     protected void onResume() {
@@ -54,6 +78,44 @@ public class MessageActivity extends AppCompatActivity {
         sensorMgr.unregisterListener(listener);
     }
 
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return detector.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                           float velocityY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+                            float distanceY) {
+        Toast.makeText(getApplicationContext(), "Scroll Gesture", Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return true;
+    }
+
+    //shake
     class ShakeListener implements SensorEventListener {
         private static final int FORCE_THRESHOLD = 1500, TIME_THRESHOLD = 100, SHAKE_TIMEOUT = 500;
         private static final int SHAKE_DURATION = 1000, SHAKE_COUNT = 3;
@@ -90,5 +152,6 @@ public class MessageActivity extends AppCompatActivity {
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
+
     }
 }
