@@ -27,7 +27,8 @@ public class ExplanationActivity extends FragmentActivity {
         viewPager = (ViewPager)findViewById(R.id.pager);
         viewPager.setAdapter(adapter);
         //Creates a PageViewer with an indicator
-        ViewPagerWithIndicator wIndicator = (ViewPagerWithIndicator) findViewById(R.id.viewPagerWithIndicator);
+        ViewPagerWithIndicator wIndicator =
+                (ViewPagerWithIndicator)findViewById(R.id.viewPagerWithIndicator);
         wIndicator.setViewPager(viewPager);
 
         //This onClick listener will perform the actions for the button
