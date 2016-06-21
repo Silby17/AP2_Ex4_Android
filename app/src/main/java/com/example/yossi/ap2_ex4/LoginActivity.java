@@ -2,6 +2,7 @@ package com.example.yossi.ap2_ex4;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -9,24 +10,30 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 
 public class LoginActivity extends AppCompatActivity {
-
+    public static String cookie = null;
+    private String TAG = "LoginActivity";
     SharedPreferences mPrefs;
     final String welcomeScreenShownPref = "welcomeScreenShown";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+
         setContentView(R.layout.activity_login);
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        // second argument is the default to use if the preference can't be found
+
+        //Second argument is the default to use if the preference can't be found
         Boolean welcomeScreenShown = mPrefs.getBoolean(welcomeScreenShownPref, false);
 
         //First time on app - intent to explanationActivity
@@ -37,70 +44,75 @@ public class LoginActivity extends AppCompatActivity {
             editor.putBoolean(welcomeScreenShownPref, true);
             editor.commit(); // Very important to save the preference
         }
-        //Secound time on app - intent to message
-        final Button btnSubmit = (Button) findViewById(R.id.btnSubmitLogin);
-        assert btnSubmit != null;
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Log.d("LoginActivity", "USER clicked SUBMIT BUTTON");
-                EditText username = (EditText) findViewById(R.id.txtUsernameLogin);
-                EditText password = (EditText) findViewById(R.id.txtPasswordLogin);
 
-                try {
-                    sendToServer();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        //Second time on app - intent to message
+        final Button btnLogin = (Button) findViewById(R.id.btnLogin);
+        assert btnLogin != null;
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+              sendLoginInfo();
             }
         });
 
-        final Button btnResend = (Button) findViewById(R.id.btnLogin);
+
+        final Button btnResend = (Button) findViewById(R.id.btnSignUp);
+        assert btnResend != null;
         btnResend.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, SignupActivity.class));
             }
         });
-        // ActionBar.LayoutParams params = new ActionBar.LayoutParams(Gravity.CENTER);
-        // getActionBar().setCustomView(v, params) .getCustomView().setLayoutParams(params);
     }
 
-    public void sendToServer() throws Exception{
-        Log.d("TESTER:", "Inside Send to sevrer");
+
+    /*************************************************************************
+     * This method will send the Login details to the WebServer
+     * @throws Exception - IOException
+     *************************************************************************/
+    public void sendLoginInfo(){
+
         EditText username = (EditText) findViewById(R.id.txtUsernameLogin);
         EditText password = (EditText) findViewById(R.id.txtPasswordLogin);
+        String usernameStr = username.getText().toString();
+        String passwordStr = password.getText().toString();
 
-        Thread thread = new Thread(new Runnable(){
+        (new AsyncTask<String, Void, Void>() {
             @Override
-            public void run(){
-                try {
-                    URL url = new URL("http://10.0.2.2:8080/login");
-                    Map<String, String> params = new LinkedHashMap<>();
-                    //params.put("username", username.getText().toString());
-                    //params.put("password", password.getText().toString());
-                    params.put("password", "admin");
-                    params.put("password", "admin");
+            protected Void doInBackground(String... params) {
+                String username = params[0];
+                String password = params[1];
+                Communicator communicator = new Communicator();
+                communicator.loginPost(username, password, new Callback<ResultResponse>() {
+                    @Override
+                    public void success(ResultResponse resultResponse, Response response) {
 
-                    StringBuilder postData = new StringBuilder();
-                    for (Map.Entry<String, String> param : params.entrySet()) {
-                        if (postData.length() != 0) postData.append('&');
-                        postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
-                        postData.append('=');
-                        postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
                     }
-                    byte[] postDataBytes = postData.toString().getBytes("UTF-8");
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    Log.d("trying url", "URL Connected");
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                    conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
-                    conn.setDoOutput(true);
-                    conn.getOutputStream().write(postDataBytes);
-                }catch (Exception e){
-                    e.printStackTrace();
 
-                }
+                    @Override
+                    public void failure(RetrofitError error) {
+                        if(error != null ){
+                            Log.e(TAG, error.getMessage());
+                            error.printStackTrace();
+                        }
+                    }
+                });
+                    return null;
             }
-        });
-        thread.start();
+        }).execute(usernameStr, passwordStr);
+
+
+    }
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        BusProvider.getInstance().register(this);
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        BusProvider.getInstance().unregister(this);
     }
 }

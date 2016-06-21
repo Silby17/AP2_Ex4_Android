@@ -11,10 +11,13 @@ public interface Interface {
 
     @FormUrlEncoded
     @POST("/NewUser")
-    void postUser(@Field("method") String method,
-                  @Field("username") String username,
-                  @Field("password") String password,
-                  Callback<ResultResponse> serverResponseCallback);
+    void postNewUser(@Field("username") String username,
+                     @Field("password") String password,
+                     @Field("name") String name,
+                     @Field("email") String email,
+                     @Field("icon") String icon,
+                     Callback<ResultResponse> serverResponseCallback);
+
 
     //This method is used for "POST"
     @FormUrlEncoded

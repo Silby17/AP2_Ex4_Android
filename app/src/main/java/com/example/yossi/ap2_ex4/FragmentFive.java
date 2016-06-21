@@ -2,9 +2,11 @@ package com.example.yossi.ap2_ex4;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 public class FragmentFive extends Fragment {
 

@@ -104,13 +104,15 @@ public class Splash extends Activity{
         /**This is the first time in the app**/
         else {
             /**Starts the animation in the splash screen**/
+            Log.d("Splash", "First time in app");
             final ImageView img = (ImageView) findViewById(R.id.imageView);
             final Animation anim = AnimationUtils.loadAnimation(getBaseContext(), R.anim.rotate);
             img.startAnimation(anim);
             anim.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 //Show the Required Toasts
-                public void onAnimationStart(Animation animation) {
+                public void onAnimationStart(final Animation animation) {
+                    Log.d("Splash", "On animation Start");
                     Toast.makeText(getApplicationContext(),
                             getResources().getString(R.string.welcome),
                             Toast.LENGTH_LONG).show();
@@ -123,7 +125,11 @@ public class Splash extends Activity{
                     Toast.makeText(getApplicationContext(),
                             getResources().getString(R.string.come_back),
                             Toast.LENGTH_LONG).show();
+                }
 
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Log.d("Splash", "onAniumationEnd");
                     //flag checked to mark that not first time in app
                     //figure it out how to come back to this page
                     SharedPreferences.Editor editor = preferences.edit();
@@ -133,9 +139,6 @@ public class Splash extends Activity{
                     Splash.this.startActivity(i);
                     finish();
                 }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {}
 
                 @Override
                 public void onAnimationRepeat(Animation animation) {}

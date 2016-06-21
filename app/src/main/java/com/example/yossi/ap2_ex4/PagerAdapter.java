@@ -1,12 +1,16 @@
 package com.example.yossi.ap2_ex4;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.widget.Button;
 
 public class PagerAdapter extends FragmentPagerAdapter{
-    public PagerAdapter(FragmentManager fm){
+    private Activity activity;
+    public PagerAdapter(FragmentManager fm, Activity activity){
         super(fm);
+        this.activity = activity;
     }
 
 
@@ -27,6 +31,7 @@ public class PagerAdapter extends FragmentPagerAdapter{
             case 3:
                 return new FragmentFour();
             case 4:
+                ((Button)activity.findViewById(R.id.btnSkip)).setText(R.string.Continue);
                 return new FragmentFive();
             default:
                 break;
