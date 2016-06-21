@@ -6,6 +6,7 @@
               android:background="#c9cad3"
               android:gravity="center"
               android:orientation="vertical"
+              android:windowSoftInputMode="adjustResize"
               tools:context=".SignupActivity">
 
     <EditText
