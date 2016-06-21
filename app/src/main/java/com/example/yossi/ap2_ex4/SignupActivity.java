@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.LayoutParams;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -17,8 +18,13 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-
+/*****************************************************************************
+ * This class will handle the singing up of the new User.
+ * It will extract all the info from the form, check that everything is in
+ * the correct format and filled in and then send to the WebServer
+ *****************************************************************************/
 public class SignupActivity extends AppCompatActivity {
+    private String TAG = "SignupActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,26 +41,22 @@ public class SignupActivity extends AppCompatActivity {
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         ab.setCustomView(textview);
 
-
+        /**The following code is to capture the click on one of the icons**/
         //Radio Group
         final RadioButton panda = (RadioButton)findViewById(R.id.panda);
         assert panda != null;
         panda.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v) {
-
-            }
+            public void onClick(View v) {}
         });
         final RadioButton rednose = (RadioButton)findViewById(R.id.rednose);
         assert rednose != null;
         rednose.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v) {
-            }
+            public void onClick(View v) {}
         });
         final RadioButton redface = (RadioButton)findViewById(R.id.redface);
         assert redface != null;
         redface.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v) {
-            }
+            public void onClick(View v) {}
         });
 
 
@@ -68,37 +70,54 @@ public class SignupActivity extends AppCompatActivity {
                 EditText email = (EditText)findViewById(R.id.txtEmail);
                 String icon = null;
 
-                if(username.getText().toString().equals("") || password.getText().toString().equals("") ||
-                        name.getText().toString().equals("") || email.getText().toString().equals("")
-                        || (!(redface.isChecked()) && !(rednose.isChecked()) && !(panda.isChecked()))){
-                    Toast.makeText(getApplicationContext(), "You did not enter in all your info", Toast.LENGTH_SHORT).show();
+                if(username.getText().toString().equals("") ||
+                        password.getText().toString().equals("") ||
+                        name.getText().toString().equals("") ||
+                        email.getText().toString().equals("") ||
+                        (!(redface.isChecked()) && !(rednose.isChecked()) &&
+                                !(panda.isChecked()))){
+                    Toast.makeText(getApplicationContext(),
+                            R.string.errorMissingInfo, Toast.LENGTH_SHORT).show();
                 }
                 else {
                     String usernameStr = username.getText().toString();
                     String passStr = password.getText().toString();
-                    String nameStr  = name.getText().toString();
+                    String nameStr = name.getText().toString();
                     String emailStr = email.getText().toString();
-                    if(redface.isChecked()){
+                    if (redface.isChecked()) {
                         icon = "redFace";
-                    } else if(rednose.isChecked()){
+                    } else if (rednose.isChecked()) {
                         icon = "redNose";
-                    }
-                    else{
+                    } else {
                         icon = "panda";
                     }
 
-                    (new AsyncTask<String, Void, Void>(){
+                    (new AsyncTask<String, Void, Void>() {
                         @Override
                         protected Void doInBackground(String... params) {
                             Communicator communicator = new Communicator();
                             communicator.newUserPost(params[0], params[1], params[2], params[3], params[4], new Callback<ResultResponse>() {
                                 @Override
                                 public void success(ResultResponse resultResponse, Response response) {
-                                    Intent i = new Intent(SignupActivity.this, MessageActivity.class);
-                                    SignupActivity.this.startActivity(i);
+                                    if(resultResponse.getResult().equals("1")){
+                                        Intent i = new Intent(SignupActivity.this,
+                                                MessageActivity.class);
+                                        SignupActivity.this.startActivity(i);
+                                    }
+                                    else
+                                    {
+                                        //If there was some error from the server
+                                        Toast.makeText(SignupActivity.this,
+                                                R.string.errorConnection, Toast.LENGTH_LONG).show();
+                                    }
                                 }
+                                //If there was an error posting the data
                                 @Override
                                 public void failure(RetrofitError error) {
+                                    if(error != null ){
+                                        Log.e(TAG, error.getMessage());
+                                        error.printStackTrace();
+                                    }
                                 }
                             });
                             return null;
@@ -107,9 +126,9 @@ public class SignupActivity extends AppCompatActivity {
                     //TODO send signup info to server
                     startActivity(new Intent(SignupActivity.this, MessageActivity.class));
                 }
-
             }
         });
+
         final Button btnResend = (Button) findViewById(R.id.btnReset);
         assert btnResend != null;
         btnResend.setOnClickListener(new View.OnClickListener() {
