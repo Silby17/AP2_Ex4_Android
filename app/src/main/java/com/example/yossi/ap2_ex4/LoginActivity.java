@@ -8,28 +8,27 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-
+import android.widget.Toast;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-
+/*****************************************************************************
+ * This Class will handle all the Login actions
+ *****************************************************************************/
 public class LoginActivity extends AppCompatActivity {
     public static String cookie = null;
     private String TAG = "LoginActivity";
-    SharedPreferences mPrefs;
+    private SharedPreferences mPrefs;
     final String welcomeScreenShownPref = "welcomeScreenShown";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-
         setContentView(R.layout.activity_login);
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -70,7 +69,11 @@ public class LoginActivity extends AppCompatActivity {
      * @throws Exception - IOException
      *************************************************************************/
     public void sendLoginInfo(){
-
+        /**This will hide the virtual keyboard**/
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(this.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
         EditText username = (EditText) findViewById(R.id.txtUsernameLogin);
         EditText password = (EditText) findViewById(R.id.txtPasswordLogin);
         String usernameStr = username.getText().toString();
@@ -82,12 +85,24 @@ public class LoginActivity extends AppCompatActivity {
                 String username = params[0];
                 String password = params[1];
                 Communicator communicator = new Communicator();
+
+                //Sends the info to Post to the server and creates a new
+                //Call back in order to get the server response
                 communicator.loginPost(username, password, new Callback<ResultResponse>() {
                     @Override
                     public void success(ResultResponse resultResponse, Response response) {
-
+                        //Checks if the login details are correct by checking
+                        // //the server response
+                        if(resultResponse.getResult().equals("-1")){
+                            Toast.makeText(getApplicationContext(),
+                                    R.string.loginError, Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Intent msg = new Intent(LoginActivity.this, MessageActivity.class);
+                            startActivity(msg);
+                        }
                     }
-
+                    //If the connection and post the the server fails
                     @Override
                     public void failure(RetrofitError error) {
                         if(error != null ){
@@ -99,8 +114,6 @@ public class LoginActivity extends AppCompatActivity {
                     return null;
             }
         }).execute(usernameStr, passwordStr);
-
-
     }
 
 
