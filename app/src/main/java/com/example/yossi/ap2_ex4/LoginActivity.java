@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
 
 /*****************************************************************************
  * This Class will handle all the Login actions
@@ -106,13 +106,12 @@ public class LoginActivity extends AppCompatActivity {
                     //If the connection and post the the server fails
                     @Override
                     public void failure(RetrofitError error) {
-                        if(error != null ){
+                        if(error != null) {
                             Log.e(TAG, error.getMessage());
                             error.printStackTrace();
                         }
                         Toast.makeText(getApplicationContext(),
                                 R.string.errorWithServer, Toast.LENGTH_SHORT).show();
-                        //TODO close app
                     }
                 });
                     return null;

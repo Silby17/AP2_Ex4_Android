@@ -141,7 +141,7 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        
+
         /***********************************************************************
          * This button will clear all entered data by simply reloading activity
          **********************************************************************/
