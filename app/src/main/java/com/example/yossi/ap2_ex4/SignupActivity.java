@@ -116,12 +116,13 @@ public class SignupActivity extends AppCompatActivity {
                                                 preferences.edit().putString("username", params[0]).apply();
                                                 preferences.edit().putString("password", params[1]).apply();
                                                 Intent i = new Intent(SignupActivity.this,
-                                                        MessageActivity.class);
+                                                        ChatActivity.class);
                                                 SignupActivity.this.startActivity(i);
                                             } else {
                                                 //If there was some error from the server
                                                 Toast.makeText(SignupActivity.this,
-                                                        R.string.errorConnection, Toast.LENGTH_LONG).show();
+                                                        R.string.errorConnection,
+                                                        Toast.LENGTH_LONG).show();
                                             }
                                         }
 
