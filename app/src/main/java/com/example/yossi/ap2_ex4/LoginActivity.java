@@ -1,60 +1,39 @@
 package com.example.yossi.ap2_ex4;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
-import java.io.DataOutput;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.Buffer;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
+/*****************************************************************************
+ * This Class will handle all the Login actions
+ *****************************************************************************/
 public class LoginActivity extends AppCompatActivity {
-
-    SharedPreferences mPrefs;
+    public static String cookie = null;
+    private String TAG = "LoginActivity";
+    private SharedPreferences mPrefs;
     final String welcomeScreenShownPref = "welcomeScreenShown";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //setting name of app in center
-        ActionBar ab = getSupportActionBar();
-        TextView textview = new TextView(getApplicationContext());
-        ActionBar.LayoutParams layoutparams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
-        textview.setLayoutParams(layoutparams);
-        textview.setGravity(Gravity.CENTER);
-        textview.setText(ab.getTitle().toString());
-        textview.setTextSize(20);
-        ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        ab.setCustomView(textview);
-        //for first time in app
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        // second argument is the default to use if the preference can't be found
+
+        //Second argument is the default to use if the preference can't be found
         Boolean welcomeScreenShown = mPrefs.getBoolean(welcomeScreenShownPref, false);
 
         //First time on app - intent to explanationActivity
@@ -65,24 +44,19 @@ public class LoginActivity extends AppCompatActivity {
             editor.putBoolean(welcomeScreenShownPref, true);
             editor.commit(); // Very important to save the preference
         }
-        //Secound time on app - intent to message
-        final Button btnSend = (Button) findViewById(R.id.btnSendLogin);
-        assert btnSend != null;
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Log.d("LoginActivity", "USER clicked SEND BUTTON");
-                EditText username = (EditText) findViewById(R.id.txtUsernameLogin);
-                EditText password = (EditText) findViewById(R.id.txtPasswordLogin);
 
-                try {
-                    sendToServer();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        //Second time on app - intent to message
+        final Button btnLogin = (Button) findViewById(R.id.btnLogin);
+        assert btnLogin != null;
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+              sendLoginInfo();
             }
         });
 
-        final Button btnResend = (Button) findViewById(R.id.btnLogin);
+
+        final Button btnResend = (Button) findViewById(R.id.btnSignUp);
+        assert btnResend != null;
         btnResend.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, SignupActivity.class));
@@ -90,45 +64,71 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void sendToServer() throws Exception{
-        Log.d("TESTER:", "Inside Send to sevrer");
+
+    /*************************************************************************
+     * This method will send the Login details to the WebServer
+     * @throws Exception - IOException
+     *************************************************************************/
+    public void sendLoginInfo(){
+        /**This will hide the virtual keyboard**/
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(this.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
         EditText username = (EditText) findViewById(R.id.txtUsernameLogin);
         EditText password = (EditText) findViewById(R.id.txtPasswordLogin);
+        String usernameStr = username.getText().toString();
+        String passwordStr = password.getText().toString();
 
-        Thread thread = new Thread(new Runnable(){
+        (new AsyncTask<String, Void, Void>() {
             @Override
-            public void run(){
-                try {
-                    URL url = new URL("http://10.0.2.2:8080/login");
-                    Map<String, String> params = new LinkedHashMap<>();
-                    //params.put("username", username.getText().toString());
-                    //params.put("password", password.getText().toString());
-                    params.put("password", "admin");
-                    params.put("password", "admin");
+            protected Void doInBackground(String... params) {
+                String username = params[0];
+                String password = params[1];
+                Communicator communicator = new Communicator();
 
-                    StringBuilder postData = new StringBuilder();
-                    for (Map.Entry<String, String> param : params.entrySet()) {
-                        if (postData.length() != 0) postData.append('&');
-                        postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
-                        postData.append('=');
-                        postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+                //Sends the info to Post to the server and creates a new
+                //Call back in order to get the server response
+                communicator.loginPost(username, password, new Callback<ResultResponse>() {
+                    @Override
+                    public void success(ResultResponse resultResponse, Response response) {
+                        //Checks if the login details are correct by checking
+                        // //the server response
+                        if(resultResponse.getResult().equals("-1")){
+                            Toast.makeText(getApplicationContext(),
+                                    R.string.loginError, Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Intent msg = new Intent(LoginActivity.this, MessageActivity.class);
+                            startActivity(msg);
+                        }
                     }
-                    byte[] postDataBytes = postData.toString().getBytes("UTF-8");
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    Log.d("trying url", "URL Connected");
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                    conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
-                    conn.setDoOutput(true);
-                    conn.getOutputStream().write(postDataBytes);
-                }catch (Exception e){
-                    e.printStackTrace();
-
-                }
+                    //If the connection and post the the server fails
+                    @Override
+                    public void failure(RetrofitError error) {
+                        if(error != null) {
+                            Log.e(TAG, error.getMessage());
+                            error.printStackTrace();
+                        }
+                        Toast.makeText(getApplicationContext(),
+                                R.string.errorWithServer, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                    return null;
             }
-        });
-        thread.start();
+        }).execute(usernameStr, passwordStr);
+    }
 
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        BusProvider.getInstance().register(this);
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        BusProvider.getInstance().unregister(this);
     }
 }

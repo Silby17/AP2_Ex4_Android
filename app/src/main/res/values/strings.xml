@@ -39,4 +39,12 @@
     <string name="Message">Write your message here</string>
     <string name="Send">Send</string>
 
+    <string name="Skip">Skip</string>
+    <string name="Continue">Continue</string>
+    <string name="loginError">Incorrect Login details - Please try again.</string>
+    <string name="errorMissingInfo">Please enter in all your information</string>
+    <string name="errorConnection">Sorry there seems to be a problem with Sign up</string>
+    <string name="errorWithServer">Sorry there is an issue with the server - Please try again</string>
+    <string name="sendSuccess">Message Sent Successfully</string>
+
 </resources>

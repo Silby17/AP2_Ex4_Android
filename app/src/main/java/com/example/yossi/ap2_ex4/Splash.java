@@ -1,14 +1,13 @@
 package com.example.yossi.ap2_ex4;
-import android.app.ActionBar;
+
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -16,68 +15,141 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
-public class Splash extends AppCompatActivity {
-    SharedPreferences mPrefs;
+/*****************************************************************************
+ * This class is in charge of the SPLASH screen that opens up
+ * at each use of the app
+ *****************************************************************************/
+public class Splash extends Activity{
     final String welcomeScreenShownPref = "welcomeScreenShown";
+    public static final String TAG = "SplashScreen";
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /**Show Window in full screen without status bar**/
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //setting name of app in center
-        android.support.v7.app.ActionBar ab = getSupportActionBar();
-        TextView textview = new TextView(getApplicationContext());
-        android.support.v7.app.ActionBar.LayoutParams layoutparams = new android.support.v7.app.ActionBar.LayoutParams(android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT, android.support.v7.app.ActionBar.LayoutParams.WRAP_CONTENT);
-        textview.setLayoutParams(layoutparams);
-        textview.setGravity(Gravity.CENTER);
-        textview.setText(ab.getTitle().toString());
-        textview.setTextSize(20);
-        ab.setDisplayOptions(android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM);
-        ab.setCustomView(textview);
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash);
-        //FIRST TIME IN APP CODE
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        /**First time in the Application**/
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         // second argument is the default to use if the preference can't be found
-        Boolean welcomeScreenShown = mPrefs.getBoolean(welcomeScreenShownPref, false);
+        Boolean welcomeScreenShown = preferences.getBoolean(welcomeScreenShownPref, false);
 
-        // not First time on app - intent to explanationActivity
+        //TODO remove the following additions to the prefs
+        //preferences.edit().putString("username", "admin").commit();
+        //preferences.edit().putString("password", "admin").commit();
+
+
+        /**If This is not First time if app**/
         if (welcomeScreenShown) {
-        //to do : connect to server with user name and password with in local storage
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.connect), Toast.LENGTH_LONG).show();
-
-        }
-        else {
+            //Starts the animation on the Splash Screen
             final ImageView img = (ImageView) findViewById(R.id.imageView);
             final Animation anim = AnimationUtils.loadAnimation(getBaseContext(), R.anim.rotate);
             img.startAnimation(anim);
+            anim.setAnimationListener(new Animation.AnimationListener(){
 
-            anim.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.welcome), Toast.LENGTH_LONG).show();
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.fun), Toast.LENGTH_LONG).show();
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.tell), Toast.LENGTH_LONG).show();
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.come_back), Toast.LENGTH_LONG).show();
+                    (new AsyncTask<Void, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(Void... params) {
+                            //Gets the SharedPreferences to read out the
+                            //saved login info of the user.
+                            SharedPreferences pref = PreferenceManager.
+                                    getDefaultSharedPreferences(getApplicationContext());
+
+                            /**Get the login details of the user and log them in**/
+                            String username = pref.getString("username", "");
+                            String pass = pref.getString("password", "");
+
+                            /**Login into the Server**/
+                            Communicator communicator = new Communicator();
+                            communicator.loginPost(username, pass, new Callback<ResultResponse>() {
+                                @Override
+                                public void success(ResultResponse serverResponse, Response response2) {
+                                    //If the POST operation was successful we will check the response code
+                                    if(serverResponse.getResult().equals("1")){
+                                        Intent msg = new Intent(Splash.this, MessageActivity.class);
+                                        Splash.this.startActivity(msg);
+                                    }
+                                }
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    if(error != null ){
+                                        Log.e(TAG, error.getMessage());
+                                        error.printStackTrace();
+                                    }
+                                    //Creates a toast to display error message
+                                    //and centers the text lines in the Toast
+                                    Toast errorConnecting =
+                                            Toast.makeText(getApplicationContext(),
+                                                    R.string.errorWithServer, Toast.LENGTH_LONG);
+                                    TextView v = (TextView)errorConnecting.getView().
+                                            findViewById(android.R.id.message);
+                                    v.setGravity(Gravity.CENTER);
+                                    errorConnecting.show();
+                                }
+                            });
+                            return null;
+                        }
+                    }).execute();
+                    /**Displays a Toast to notify the user that he is being connected
+                     * To the server **/
+                    Toast.makeText(getApplicationContext(),
+                            getResources().getString(R.string.connect),
+                            Toast.LENGTH_LONG).show();
+                }
+                @Override
+                public void onAnimationEnd(Animation animation) {}
+                @Override
+                public void onAnimationRepeat(Animation animation) {}
+            });
+        }
+        /**This is the first time in the app**/
+        else {
+            /**Starts the animation in the splash screen**/
+            final ImageView img = (ImageView) findViewById(R.id.imageView);
+            final Animation anim = AnimationUtils.loadAnimation(getBaseContext(), R.anim.rotate);
+            img.startAnimation(anim);
+            anim.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                //Show the Required Toasts
+                public void onAnimationStart(final Animation animation) {
+                    Toast.makeText(getApplicationContext(),
+                            getResources().getString(R.string.welcome),
+                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),
+                            getResources().getString(R.string.fun),
+                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),
+                            getResources().getString(R.string.tell),
+                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),
+                            getResources().getString(R.string.come_back),
+                            Toast.LENGTH_LONG).show();
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    Intent i = new Intent(Splash.this, ExplanationActivity.class);
-                    Splash.this.startActivity(i);
-                    //flag done to mark that not first time in app
+                    //flag checked to mark that not first time in app
                     //figure it out how to come back to this page
-                    SharedPreferences.Editor editor = mPrefs.edit();
+                    SharedPreferences.Editor editor = preferences.edit();
                     editor.putBoolean(welcomeScreenShownPref, true);
                     editor.commit(); // Very important to save the preference
+                    Intent i = new Intent(Splash.this, ExplanationActivity.class);
+                    Splash.this.startActivity(i);
                     finish();
                 }
-
                 @Override
-                public void onAnimationRepeat(Animation animation) {
-                }
+                public void onAnimationRepeat(Animation animation) {}
             });
         }
     }
