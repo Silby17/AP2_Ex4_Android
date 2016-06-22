@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                                     R.string.loginError, Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            Intent msg = new Intent(LoginActivity.this, MessageActivity.class);
+                            Intent msg = new Intent(LoginActivity.this, ChatActivity.class);
                             startActivity(msg);
                         }
                     }

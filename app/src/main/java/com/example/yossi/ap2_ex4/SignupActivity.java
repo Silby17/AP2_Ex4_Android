@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.LayoutParams;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.ChangeTransform;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -116,7 +117,7 @@ public class SignupActivity extends AppCompatActivity {
                                                 preferences.edit().putString("username", params[0]).apply();
                                                 preferences.edit().putString("password", params[1]).apply();
                                                 Intent i = new Intent(SignupActivity.this,
-                                                        MessageActivity.class);
+                                                        ChatActivity.class);
                                                 SignupActivity.this.startActivity(i);
                                             } else {
                                                 //If there was some error from the server

@@ -77,7 +77,7 @@ public class Splash extends Activity{
                                 public void success(ResultResponse serverResponse, Response response2) {
                                     //If the POST operation was successful we will check the response code
                                     if(serverResponse.getResult().equals("1")){
-                                        Intent msg = new Intent(Splash.this, MessageActivity.class);
+                                        Intent msg = new Intent(Splash.this, ChatActivity.class);
                                         Splash.this.startActivity(msg);
                                     }
                                 }

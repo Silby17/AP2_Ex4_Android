@@ -29,6 +29,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Communicator communicator = new Communicator();
                 String msg = ((EditText)findViewById(R.id.txtMessage)).getText().toString();
+
                 communicator.newMessagePost("Joe", msg, new Callback<ResultResponse>() {
                     @Override
                     public void success(ResultResponse resultResponse, Response response) {
@@ -43,8 +44,6 @@ public class MessageActivity extends AppCompatActivity {
 
                     }
                 });
-
-
             }
         });
         ((EditText)findViewById(R.id.txtMessage)).setText(null);
@@ -61,15 +60,12 @@ public class MessageActivity extends AppCompatActivity {
                     public void success(GetMessageResponse getMessageResponse, Response response) {
                         Log.d(TAG, getMessageResponse.toString());
                     }
-
                     @Override
                     public void failure(RetrofitError error) {
 
                     }
                 });
-
             }
-
         });
          **/
     }
