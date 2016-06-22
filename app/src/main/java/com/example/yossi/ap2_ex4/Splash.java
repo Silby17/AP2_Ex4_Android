@@ -7,11 +7,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -85,6 +87,15 @@ public class Splash extends Activity{
                                         Log.e(TAG, error.getMessage());
                                         error.printStackTrace();
                                     }
+                                    //Creates a toast to display error message
+                                    //and centers the text lines in the Toast
+                                    Toast errorConnecting =
+                                            Toast.makeText(getApplicationContext(),
+                                                    R.string.errorWithServer, Toast.LENGTH_LONG);
+                                    TextView v = (TextView)errorConnecting.getView().
+                                            findViewById(android.R.id.message);
+                                    v.setGravity(Gravity.CENTER);
+                                    errorConnecting.show();
                                 }
                             });
                             return null;
