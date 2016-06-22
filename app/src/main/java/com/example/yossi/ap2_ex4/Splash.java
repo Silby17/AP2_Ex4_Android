@@ -42,8 +42,8 @@ public class Splash extends Activity{
         Boolean welcomeScreenShown = preferences.getBoolean(welcomeScreenShownPref, false);
 
         //TODO remove the following additions to the prefs
-        preferences.edit().putString("username", "admin").commit();
-        preferences.edit().putString("password", "admin").commit();
+        //preferences.edit().putString("username", "admin").commit();
+        //preferences.edit().putString("password", "admin").commit();
 
 
         /**If This is not First time if app**/
@@ -59,14 +59,17 @@ public class Splash extends Activity{
                     (new AsyncTask<Void, Void, Void>() {
                         @Override
                         protected Void doInBackground(Void... params) {
+                            //Gets the SharedPreferences to read out the
+                            //saved login info of the user.
                             SharedPreferences pref = PreferenceManager.
                                     getDefaultSharedPreferences(getApplicationContext());
 
                             /**Get the login details of the user and log them in**/
                             String username = pref.getString("username", "");
                             String pass = pref.getString("password", "");
-                            Communicator communicator = new Communicator();
+
                             /**Login into the Server**/
+                            Communicator communicator = new Communicator();
                             communicator.loginPost(username, pass, new Callback<ResultResponse>() {
                                 @Override
                                 public void success(ResultResponse serverResponse, Response response2) {
