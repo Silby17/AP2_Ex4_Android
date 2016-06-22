@@ -4,9 +4,11 @@ package com.example.yossi.ap2_ex4;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import retrofit.Callback;
@@ -41,7 +43,17 @@ public class MessageActivity extends AppCompatActivity {
                     }
                     @Override
                     public void failure(RetrofitError error) {
-
+                        if(error != null ){
+                            Log.e(TAG, error.getMessage());
+                            error.printStackTrace();
+                        }
+                        Toast errorConnecting =
+                                Toast.makeText(getApplicationContext(),
+                                        R.string.errorWithServer, Toast.LENGTH_LONG);
+                        TextView v = (TextView)errorConnecting.getView().
+                                findViewById(android.R.id.message);
+                        v.setGravity(Gravity.CENTER);
+                        errorConnecting.show();
                     }
                 });
             }

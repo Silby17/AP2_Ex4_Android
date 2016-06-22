@@ -1,13 +1,16 @@
 package com.example.yossi.ap2_ex4;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,11 +27,12 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-/*
-    The class is in charge of the chat
- */
+/***************************************************************************
+ * This Class handles the message screen
+ **************************************************************************/
 public class ChatActivity extends AppCompatActivity implements OnGestureListener {
     private String TAG = "ChatActivity";
+    private SharedPreferences preferences;
     private SensorManager sensorMgr;
     private ShakeListener listener;
     private Sensor accelerometer;
@@ -42,12 +46,14 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
     ChatAdapter adapter;
     Context ctx = this;
 
-    /**
-     * Perform initialization of all fragments and loaders.
-     */
+    /*************************************************************************
+     * This method is called when the Chat Activity gets created
+     * @param savedInstanceState
+     ************************************************************************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //scroll
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        //Scroll
         textview = new TextView(this);
         textview.setText("");
         detector = new GestureDetector(this, this);
@@ -55,7 +61,8 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
         //setting name of app in center
         ActionBar ab = getSupportActionBar();
         TextView textview = new TextView(getApplicationContext());
-        ActionBar.LayoutParams layoutparams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
+        ActionBar.LayoutParams layoutparams = new ActionBar.LayoutParams(
+                ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
         textview.setLayoutParams(layoutparams);
         textview.setGravity(Gravity.CENTER);
         textview.setText(ab.getTitle().toString());
@@ -94,19 +101,29 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
             public void onClick(View v) {
                 Communicator communicator = new Communicator();
                 String msg = chat_text.getText().toString();
-                communicator.newMessagePost("nav", msg, new Callback<ResultResponse>() {
+                String username = preferences.getString("username", "");
+                communicator.newMessagePost(username, msg, new Callback<ResultResponse>() {
                     @Override
                     public void success(ResultResponse resultResponse, Response response) {
                         if(resultResponse.getResult().equals("1")){
                             Toast.makeText(getApplicationContext(),
                                     R.string.sendSuccess, Toast.LENGTH_SHORT).show();
                         }
-
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
-
+                        if(error != null ){
+                            Log.e(TAG, error.getMessage());
+                            error.printStackTrace();
+                        }
+                        Toast errorConnecting =
+                                Toast.makeText(getApplicationContext(),
+                                        R.string.errorWithServer, Toast.LENGTH_LONG);
+                        TextView v = (TextView)errorConnecting.getView().
+                                findViewById(android.R.id.message);
+                        v.setGravity(Gravity.CENTER);
+                        errorConnecting.show();
                     }
                 });
 
@@ -118,6 +135,7 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
 
         });
     }
+
     //scroll
     @Override
     protected void onResume() {
@@ -138,9 +156,7 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
     }
 
     @Override
-    public boolean onDown(MotionEvent e) {
-        return false;
-    }
+    public boolean onDown(MotionEvent e) {return false;}
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
@@ -149,8 +165,7 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
     }
 
     @Override
-    public void onLongPress(MotionEvent e) {
-    }
+    public void onLongPress(MotionEvent e) {}
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
@@ -160,13 +175,10 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
     }
 
     @Override
-    public void onShowPress(MotionEvent e) {
-    }
+    public void onShowPress(MotionEvent e) {}
 
     @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        return false;
-    }
+    public boolean onSingleTapUp(MotionEvent e) {return false;}
 
     //shake
     class ShakeListener implements SensorEventListener {
@@ -203,8 +215,6 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
         }
 
         @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        }
-
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {}
     }
 }
