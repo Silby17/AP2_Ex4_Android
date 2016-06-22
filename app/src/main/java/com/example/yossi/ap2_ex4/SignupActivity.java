@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.LayoutParams;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.transition.ChangeTransform;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -126,7 +125,6 @@ public class SignupActivity extends AppCompatActivity {
                                                         Toast.LENGTH_LONG).show();
                                             }
                                         }
-
                                         //If there was an error posting the data
                                         @Override
                                         public void failure(RetrofitError error) {
