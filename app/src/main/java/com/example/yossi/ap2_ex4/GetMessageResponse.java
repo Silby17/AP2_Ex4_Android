@@ -1,10 +1,15 @@
 package com.example.yossi.ap2_ex4;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 import java.util.Date;
 
+/***************************************************************************
+ * This class is the Response that the App will get from the server
+ * after requesting information from the SQL server
+ * This is a standard serializable class with getters and setters for all
+ * fields of this Object
+ ***************************************************************************/
 public class GetMessageResponse implements Serializable {
 
     @SerializedName("username")
