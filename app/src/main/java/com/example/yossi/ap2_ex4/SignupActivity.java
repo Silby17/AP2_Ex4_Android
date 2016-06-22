@@ -122,7 +122,8 @@ public class SignupActivity extends AppCompatActivity {
                                             } else {
                                                 //If there was some error from the server
                                                 Toast.makeText(SignupActivity.this,
-                                                        R.string.errorConnection, Toast.LENGTH_LONG).show();
+                                                        R.string.errorConnection,
+                                                        Toast.LENGTH_LONG).show();
                                             }
                                         }
 

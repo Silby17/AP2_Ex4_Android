@@ -6,7 +6,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -21,10 +20,15 @@ import android.view.GestureDetector.OnGestureListener;
 import android.view.GestureDetector;
 import android.widget.Toast;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 /*
     The class is in charge of the chat
  */
 public class ChatActivity extends AppCompatActivity implements OnGestureListener {
+    private String TAG = "ChatActivity";
     private SensorManager sensorMgr;
     private ShakeListener listener;
     private Sensor accelerometer;
@@ -83,15 +87,35 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
         //adding static messages to the chat
         adapter.add(new DataProvider(position, "What's up?"));
         position = !position;
-        chat_text.setText("");
+       // chat_text.setText("");
         //occurs every time send is being pressed
         SEND.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.add(new DataProvider(position, chat_text.getText()
-                        .toString()));
+                Communicator communicator = new Communicator();
+                String msg = chat_text.getText().toString();
+                communicator.newMessagePost("nav", msg, new Callback<ResultResponse>() {
+                    @Override
+                    public void success(ResultResponse resultResponse, Response response) {
+                        if(resultResponse.getResult().equals("1")){
+                            Toast.makeText(getApplicationContext(),
+                                    R.string.sendSuccess, Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
+
+                //adapter.add(new DataProvider(position, chat_text.getText()
+                  //      .toString()));
+                //chat_text.setText("");
                 chat_text.setText("");
             }
+
         });
     }
     //scroll
