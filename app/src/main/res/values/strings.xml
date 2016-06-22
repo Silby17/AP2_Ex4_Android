@@ -36,7 +36,7 @@
     <string name="fragFiveContent">All of the running of this app will be done while connected to our Web Server</string>
 
     <!--activity_message-->
-    <string name="Message">write your message here</string>
+    <string name="Message">Write your message here</string>
     <string name="Send">Send</string>
 
 </resources>

@@ -84,12 +84,6 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
         adapter.add(new DataProvider(position, "What's up?"));
         position = !position;
         chat_text.setText("");
-        adapter.add(new DataProvider(position, "Nothing much...you?"));
-        position = !position;
-        chat_text.setText("");
-        adapter.add(new DataProvider(position, "Just chillin'"));
-        position = !position;
-        chat_text.setText("");
         //occurs every time send is being pressed
         SEND.setOnClickListener(new View.OnClickListener() {
             @Override
