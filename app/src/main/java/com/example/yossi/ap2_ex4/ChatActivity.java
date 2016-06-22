@@ -23,6 +23,8 @@ import android.view.GestureDetector.OnGestureListener;
 import android.view.GestureDetector;
 import android.widget.Toast;
 
+import java.util.Date;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -92,8 +94,8 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
             }
         });
         //adding static messages to the chat
-        adapter.add(new DataProvider(position, "What's up?"));
-        position = !position;
+        //adapter.add(new DataProvider(position, "What's up?","alice",new Date()));
+        //position = !position;
        // chat_text.setText("");
         //occurs every time send is being pressed
         SEND.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +133,7 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
                   //      .toString()));
                 //chat_text.setText("");
                 chat_text.setText("");
+                getMessageAtINdex(1);
             }
 
         });
@@ -177,6 +180,7 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
     @Override
     public void onShowPress(MotionEvent e) {}
 
+
     @Override
     public boolean onSingleTapUp(MotionEvent e) {return false;}
 
@@ -217,4 +221,26 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {}
     }
+
+
+    public void getMessageAtINdex(int index){
+        String id = String.valueOf(index);
+        Communicator communicator = new Communicator();
+        communicator.getMessagePost(id, new Callback<GetMessageResponse>() {
+            @Override
+            public void success(GetMessageResponse getMessageResponse, Response response) {
+                String username = getMessageResponse.getUsername();
+                String message1 = getMessageResponse.getMessage();
+                Date date = getMessageResponse.getTime();
+                adapter.add(new DataProvider(position, username, message1, date));
+                position = !position;
+                chat_text.setText("");
+            }
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+    }
+
 }
