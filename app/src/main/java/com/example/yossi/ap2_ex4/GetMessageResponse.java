@@ -18,13 +18,13 @@ public class GetMessageResponse implements Serializable {
     @SerializedName("message")
     private String message;
 
-    @SerializedName("sentTime")
+    @SerializedName("time")
     private String time;
 
-    public GetMessageResponse(String username, String message, String date){
+    public GetMessageResponse(String username, String message, String time){
         this.username = username;
         this.message = message;
-        this.time = date;
+        this.time = time;
     }
 
     public String getUsername() {
