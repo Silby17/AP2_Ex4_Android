@@ -11,14 +11,14 @@ public class DataProvider {
     public boolean position;
     public String message;
     public String username;
-    public Date date;
+    public String date;
 
     /*
         constructor
         position - the position of the message
         message - the text that was sent
      */
-    public DataProvider(boolean position, String message, String username,Date date) {
+    public DataProvider(boolean position, String message, String username,String date) {
         super();
         this.position = position;
         this.message = message;
