@@ -118,6 +118,7 @@ public class SignupActivity extends AppCompatActivity {
                                                 Intent i = new Intent(SignupActivity.this,
                                                         ChatActivity.class);
                                                 SignupActivity.this.startActivity(i);
+                                                finish();
                                             } else {
                                                 //If there was some error from the server
                                                 Toast.makeText(SignupActivity.this,

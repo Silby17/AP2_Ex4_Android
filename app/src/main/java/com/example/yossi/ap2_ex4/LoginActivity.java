@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                         // //the server response
                         if(resultResponse.getResult().equals("-1")){
                             Toast.makeText(getApplicationContext(),
-                                    R.string.loginError, Toast.LENGTH_SHORT).show();
+                                    R.string.detailsError, Toast.LENGTH_SHORT).show();
                         }
                         else{
                             Intent msg = new Intent(LoginActivity.this, ChatActivity.class);

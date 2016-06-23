@@ -38,6 +38,7 @@ public class ExplanationActivity extends FragmentActivity {
             public void onClick(View v){
                 startActivity(new Intent(ExplanationActivity.this,
                         LoginActivity.class));
+                finish();
             }
         });
     }
