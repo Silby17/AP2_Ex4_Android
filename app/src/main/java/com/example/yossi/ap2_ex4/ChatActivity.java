@@ -40,7 +40,6 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
     private Sensor accelerometer;
     private TextView textview;
     private GestureDetector detector;
-
     ListView listview;
     EditText chat_text;
     Button SEND;
@@ -54,6 +53,7 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
      ************************************************************************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Communicator communicator = new Communicator();
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         //Scroll
         textview = new TextView(this);
@@ -102,6 +102,7 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
             @Override
             public void onClick(View v) {
                 Communicator communicator = new Communicator();
+                //getMessageCount();
                 String msg = chat_text.getText().toString();
                 String username = preferences.getString("username", "");
                 communicator.newMessagePost(username, msg, new Callback<ResultResponse>() {
@@ -112,7 +113,6 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
                                     R.string.sendSuccess, Toast.LENGTH_SHORT).show();
                         }
                     }
-
                     @Override
                     public void failure(RetrofitError error) {
                         if(error != null ){
@@ -133,7 +133,7 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
                   //      .toString()));
                 //chat_text.setText("");
                 chat_text.setText("");
-                getMessageAtINdex(1);
+                //getMessageAtIndex(1);
             }
 
         });
@@ -198,7 +198,6 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
             if ((now - mLastForce) > SHAKE_TIMEOUT) {
                 mShakeCount = 0;
             }
-
             float[] values = event.values;
             if ((now - mLastTime) > TIME_THRESHOLD) {
                 long diff = now - mLastTime;
@@ -223,7 +222,7 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
     }
 
 
-    public void getMessageAtINdex(int index){
+    public void getMessageAtIndex(int index){
         String id = String.valueOf(index);
         Communicator communicator = new Communicator();
         communicator.getMessagePost(id, new Callback<GetMessageResponse>() {
@@ -238,9 +237,25 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
             }
             @Override
             public void failure(RetrofitError error) {
-
             }
         });
+    }
+
+
+    public long getMessageCount(){
+        final long[] count = new long[1];
+        Communicator communicator = new Communicator();
+        communicator.getMessageCount("count", new Callback<ResultResponse>() {
+            @Override
+            public void success(ResultResponse resultResponse, Response response) {
+                count[0] = Long.valueOf(resultResponse.getResult());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+            }
+        });
+        return count[0];
     }
 
 }

@@ -1,9 +1,13 @@
 package com.example.yossi.ap2_ex4;
 
+import android.telecom.Call;
+
 import retrofit.Callback;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
+import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.Query;
 
 
 /***************************************************************************
@@ -23,7 +27,7 @@ public interface Interface {
      * @param serverResponseCallback - The response result from server
      **********************************************************************/
     @FormUrlEncoded
-    @POST("/NewUser")
+    @POST("/New_WebServer/NewUser")
     void postNewUser(@Field("username") String username,
                      @Field("password") String password,
                      @Field("name") String name,
@@ -40,7 +44,7 @@ public interface Interface {
      * @param serverResponseCallback login result from the server
      ***********************************************************************/
     @FormUrlEncoded
-    @POST("/login")
+    @POST("/New_WebServer/login")
     void postData(@Field("method") String method,
                   @Field("username") String username,
                   @Field("password") String password,
@@ -55,10 +59,21 @@ public interface Interface {
      * @param serverResponse - Response result from the server
      ***********************************************************************/
     @FormUrlEncoded
-    @POST("/messageServlet")
+    @POST("/New_WebServer/messageServlet")
     void postNewMessage(@Field("username") String username,
                         @Field("message") String message,
                         Callback<ResultResponse> serverResponse);
+
+    /***********************************************************************
+     * This Method will POST to the getMsgCount servlet and will get back
+     * the number of messages in the database
+     * @param count - identifier to send
+     * @param callback - Response from the server
+     **********************************************************************/
+    @FormUrlEncoded
+    @POST("/New_WebServer/getMsgCount")
+    void getMessageCount(@Field("count") String count,
+                         Callback<ResultResponse> callback);
 
 
     /**********************************************************************
@@ -69,7 +84,7 @@ public interface Interface {
      *                       the failed report
      ***********************************************************************/
     @FormUrlEncoded
-    @POST("/getMessage")
+    @POST("/New_WebServer/getMessage")
     void postGetMessage(@Field("msgID") String id,
                         Callback<GetMessageResponse> serverResponse);
 }
