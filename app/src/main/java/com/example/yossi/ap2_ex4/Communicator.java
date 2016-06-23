@@ -3,8 +3,6 @@ package com.example.yossi.ap2_ex4;
 import com.squareup.otto.Produce;
 import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 
 public class Communicator {
@@ -24,7 +22,7 @@ public class Communicator {
 
     //private static final String SERVER_URL = "http://192.168.1.21:8080";
     //private static final String SERVER_URL = "http://192.168.1.15:8080";
-    //private static final String SERVER_URL = "http://advprog.cs.biu.ac.il:8080";
+    private static final String SERVER_URL = "http://advprog.cs.biu.ac.il:8080";
 
     public void newUserPost(String username, String pass, String name,
                             String email, String icon, Callback<ResultResponse> callback){
@@ -62,10 +60,6 @@ public class Communicator {
         Interface communicatorInterface = restAdapter.create(Interface.class);
         communicatorInterface.getMessageCount(count, callback);
     }
-
-
-
-
 
     @Produce
     public ServerEvent produceServerEvent(ServerResponse serverResponse) {
