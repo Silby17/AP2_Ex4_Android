@@ -24,7 +24,7 @@ public class Communicator {
 
     //private static final String SERVER_URL = "http://192.168.1.21:8080";
     //private static final String SERVER_URL = "http://192.168.1.15:8080";
-    private static final String SERVER_URL = "http://advprog.cs.biu.ac.il:8080";
+    //private static final String SERVER_URL = "http://advprog.cs.biu.ac.il:8080";
 
     public void newUserPost(String username, String pass, String name,
                             String email, String icon, Callback<ResultResponse> callback){

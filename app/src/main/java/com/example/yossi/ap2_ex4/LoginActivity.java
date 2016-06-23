@@ -83,8 +83,8 @@ public class LoginActivity extends AppCompatActivity {
         (new AsyncTask<String, Void, Void>() {
             @Override
             protected Void doInBackground(String... params) {
-                String username = params[0];
-                String password = params[1];
+                final String username = params[0];
+                final String password = params[1];
                 Communicator communicator = new Communicator();
 
                 //Sends the info to Post to the server and creates a new
@@ -94,11 +94,16 @@ public class LoginActivity extends AppCompatActivity {
                     public void success(ResultResponse resultResponse, Response response) {
                         //Checks if the login details are correct by checking
                         // //the server response
+
                         if(resultResponse.getResult().equals("-1")){
                             Toast.makeText(getApplicationContext(),
                                     R.string.detailsError, Toast.LENGTH_SHORT).show();
                         }
                         else{
+                            ((EditText)LoginActivity.this.findViewById(R.id.txtPasswordLogin)).setText("");
+                            ((EditText)LoginActivity.this.findViewById(R.id.txtUsernameLogin)).setText("");
+                            mPrefs.edit().putString("username", username).apply();
+                            mPrefs.edit().putString("password", password).apply();
                             Intent msg = new Intent(LoginActivity.this, ChatActivity.class);
                             startActivity(msg);
                         }

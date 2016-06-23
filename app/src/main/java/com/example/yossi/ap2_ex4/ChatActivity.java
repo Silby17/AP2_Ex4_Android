@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -78,6 +79,7 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
         //uploads the layout
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         //define the objects in the chat
         listview = (ListView) findViewById(R.id.chat_list_view);
         chat_text = (EditText) findViewById(R.id.chatTxt);
@@ -230,7 +232,7 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
             public void success(GetMessageResponse getMessageResponse, Response response) {
                 String username = getMessageResponse.getUsername();
                 String message1 = getMessageResponse.getMessage();
-                Date date = getMessageResponse.getTime();
+                String date = getMessageResponse.getTime();
                 adapter.add(new DataProvider(position, username, message1, date));
                 position = !position;
                 chat_text.setText("");

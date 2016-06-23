@@ -19,9 +19,9 @@ public class GetMessageResponse implements Serializable {
     private String message;
 
     @SerializedName("sentTime")
-    private Date time;
+    private String time;
 
-    public GetMessageResponse(String username, String message, Date date){
+    public GetMessageResponse(String username, String message, String date){
         this.username = username;
         this.message = message;
         this.time = date;
@@ -43,11 +43,11 @@ public class GetMessageResponse implements Serializable {
         this.message = message;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 }
