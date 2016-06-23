@@ -1,11 +1,12 @@
 package com.example.yossi.ap2_ex4;
-
-
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-
+/**************************************************************************
+ * This Object is what response will be expected from the server on get
+ * message request
+ *************************************************************************/
 public class ServerResponse implements Serializable {
     @SerializedName("returned_username")
     private String username;

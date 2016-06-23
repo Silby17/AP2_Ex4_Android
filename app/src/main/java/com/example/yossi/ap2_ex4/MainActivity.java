@@ -15,8 +15,10 @@ public class MainActivity extends AppCompatActivity {
         //setting name of app in center
         ActionBar ab = getSupportActionBar();
         TextView textview = new TextView(getApplicationContext());
-        ActionBar.LayoutParams layoutparams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
-        textview.setLayoutParams(layoutparams);
+        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
+                ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.WRAP_CONTENT);
+        textview.setLayoutParams(layoutParams);
         textview.setGravity(Gravity.CENTER);
         textview.setText(ab.getTitle().toString());
         textview.setTextSize(20);

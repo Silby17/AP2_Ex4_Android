@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:weightSum="1"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="8dp"
-    android:layout_marginStart="8dp" >
-<EditText
-    android:id="@+id/singleMessage"
-    android:layout_width="match_parent"
-    android:layout_height="57dp"
-    android:ems="10"
-    android:inputType="textMultiLine"
-    android:hint="@string/Message"
-    android:background="@drawable/chat6"
-    android:labelFor="@+id/editText"
-    android:maxLength="9"
-    android:paddingBottom="8dp"
-    android:paddingStart="48dp"
-    android:paddingLeft="48dp"
-    android:paddingEnd="8dp"
-    android:paddingRight="80dp"
-    android:paddingTop="8dp" >
-    <requestFocus />
-</EditText>
+             android:orientation="vertical"
+             android:weightSum="1"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginEnd="8dp"
+             android:layout_marginStart="8dp" >
+    <EditText
+        android:id="@+id/singleMessage"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:hint="@string/Message"
+        android:background="@drawable/chat6"
+        android:labelFor="@+id/editText"
+        android:maxLength="9"
+        android:paddingBottom="8dp"
+        android:paddingStart="48dp"
+        android:paddingLeft="48dp"
+        android:paddingEnd="8dp"
+        android:paddingRight="80dp"
+        android:paddingTop="8dp" >
+        <requestFocus />
+    </EditText>
 
     <TextView
         android:id="@+id/time"
@@ -34,7 +34,7 @@
         android:paddingBottom="8dp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:text="99/99/99 - SET VIA JAVA" />
+        android:text="99/99/99" />
 
     <TextView
         android:id="@+id/txtUsername"
@@ -45,5 +45,5 @@
         android:paddingBottom="8dp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:text="ZORBAVELA - SET TEXT VIA JAVA" />
+        android:text="ZORBAVELA" />
 </FrameLayout>

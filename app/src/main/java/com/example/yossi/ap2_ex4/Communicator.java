@@ -1,9 +1,7 @@
 package com.example.yossi.ap2_ex4;
-
 import com.squareup.otto.Produce;
 import retrofit.Callback;
 import retrofit.RestAdapter;
-
 
 public class Communicator {
     private static  final String TAG = "Communicator";
@@ -19,9 +17,7 @@ public class Communicator {
         communicatorInterface.postData("login", username, password, callback);
     }
 
-
-    //private static final String SERVER_URL = "http://192.168.1.21:8080";
-    //private static final String SERVER_URL = "http://192.168.1.15:8080";
+    //private static final String SERVER_URL = "http://192.168.1.13:8080";
     private static final String SERVER_URL = "http://advprog.cs.biu.ac.il:8080";
 
     public void newUserPost(String username, String pass, String name,
@@ -33,6 +29,7 @@ public class Communicator {
         Interface communicatorInterface = restAdapter.create(Interface.class);
         communicatorInterface.postNewUser(username, pass, name, email, icon, callback);
     }
+
 
     public void getMessagePost(String id, Callback<GetMessageResponse> callback){
         RestAdapter restAdapter = new RestAdapter.Builder()

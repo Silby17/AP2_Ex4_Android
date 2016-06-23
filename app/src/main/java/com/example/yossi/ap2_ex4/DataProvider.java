@@ -1,9 +1,5 @@
 package com.example.yossi.ap2_ex4;
 
-
-import java.sql.Timestamp;
-import java.util.Date;
-
 /*
     The class is in charge if the chat message object
  */
@@ -13,11 +9,13 @@ public class DataProvider {
     public String username;
     public String date;
 
-    /*
-        constructor
-        position - the position of the message
-        message - the text that was sent
-     */
+    /************************************************************************
+     * Constructor
+     * @param position - position of the method
+     * @param message - message itself
+     * @param username - user who sent the message
+     * @param date - date of send
+     ************************************************************************/
     public DataProvider(boolean position, String message, String username,String date) {
         super();
         this.position = position;
@@ -26,4 +24,3 @@ public class DataProvider {
         this.date = date;
     }
 }
-
