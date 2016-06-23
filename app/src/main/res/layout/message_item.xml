@@ -1,20 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp" >
+<EditText
+    android:id="@+id/singleMessage"
+    android:layout_width="match_parent"
+    android:layout_height="57dp"
+    android:ems="10"
+    android:inputType="textMultiLine"
+    android:hint="@string/Message"
+    android:background="@drawable/chat6"
+    android:labelFor="@+id/editText"
+    android:maxLength="9"
+    android:paddingBottom="8dp"
+    android:paddingStart="48dp"
+    android:paddingLeft="48dp"
+    android:paddingEnd="8dp"
+    android:paddingRight="80dp"
+    android:paddingTop="8dp" >
+    <requestFocus />
+</EditText>
+
     <TextView
-        android:id="@+id/singleMessage"
-        android:layout_width="350dp"
-        android:layout_height="30dp"
-        android:layout_margin="5dip"
-        android:textColor="#000000"
-        android:background="@drawable/chat6"
-        android:text="@string/Message"
-        android:inputType="textMultiLine"
-        android:textSize="15sp"
-        android:textAlignment="center"
-        android:layout_gravity="center"
-        android:gravity="center" />
-</LinearLayout>
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:paddingStart="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:text="99/99/99 - SET VIA JAVA" />
+
+    <TextView
+        android:id="@+id/txtUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:paddingStart="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:text="ZORBAVELA - SET TEXT VIA JAVA" />
+</FrameLayout>
