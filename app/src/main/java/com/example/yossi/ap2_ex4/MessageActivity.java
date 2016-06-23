@@ -32,28 +32,15 @@ public class MessageActivity extends AppCompatActivity {
                 Communicator communicator = new Communicator();
                 String msg = ((EditText)findViewById(R.id.txtMessage)).getText().toString();
 
-                communicator.newMessagePost("Joe", msg, new Callback<ResultResponse>() {
+                communicator.getMessageCount("count", new Callback<ResultResponse>() {
                     @Override
                     public void success(ResultResponse resultResponse, Response response) {
-                        if(resultResponse.getResult().equals("1")){
-                            Toast.makeText(getApplicationContext(),
-                                    R.string.sendSuccess, Toast.LENGTH_SHORT).show();
-                            Log.d(TAG, "Done perfectly");
-                        }
+                        Log.d(TAG, resultResponse.getResult());
                     }
+
                     @Override
                     public void failure(RetrofitError error) {
-                        if(error != null ){
-                            Log.e(TAG, error.getMessage());
-                            error.printStackTrace();
-                        }
-                        Toast errorConnecting =
-                                Toast.makeText(getApplicationContext(),
-                                        R.string.errorWithServer, Toast.LENGTH_LONG);
-                        TextView v = (TextView)errorConnecting.getView().
-                                findViewById(android.R.id.message);
-                        v.setGravity(Gravity.CENTER);
-                        errorConnecting.show();
+
                     }
                 });
             }
