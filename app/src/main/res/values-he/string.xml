@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--activity_message-->
-
-    <string name="Message">כתוב את הודעתך כאן</string>
-    <string name="Send">שלח</string>
-
     <!--activity_login-->
     <string name="Username">שם משתמש</string>
     <string name="Password">סיסמא</string>
 
     <!--activity_signup-->
+    <string name="Submit">שלח</string>
     <string name="Reset">אפס טופס</string>
     <string name="Email">כתובת אימייל</string>
     <string name="Name">שם</string>
@@ -39,5 +35,18 @@
     <!--fragment_layout_five-->
     <string name="fragFiveTitle">שרת אינטרנטי</string>
     <string name="fragFiveContent">האפליקציה רצה בשרת אינטרנטי</string>
+
+    <!--activity_message-->
+    <string name="Message">כתוב את הודעתך כאן</string>
+    <string name="Send">שלח</string>
+
+    <string name="Skip">דלג</string>
+    <string name="Continue">המשך</string>
+    <string name="detailsError">פרטים לא נכונים</string>
+    <string name="errorMissingInfo">תמלא את כל הפרטים בבקשה</string>
+    <string name="errorConnection">מצטער, יש בעיה עם ההרשמה</string>
+    <string name="errorWithServer">מצטער יש בעיה בשרת</string>
+    <string name="sendSuccess">שלח בהצלחה</string>
+    <string name="loginError">בעיה בלוג אין</string>
 
 </resources>
