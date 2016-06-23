@@ -79,6 +79,11 @@ public class Splash extends Activity{
                                     if(serverResponse.getResult().equals("1")){
                                         Intent msg = new Intent(Splash.this, ChatActivity.class);
                                         Splash.this.startActivity(msg);
+                                        finish();
+                                    }
+                                    else{
+                                        Toast.makeText(getApplicationContext(),
+                                                R.string.loginError, Toast.LENGTH_SHORT).show();
                                     }
                                 }
                                 @Override
