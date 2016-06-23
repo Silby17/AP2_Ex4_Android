@@ -113,6 +113,7 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
                         if(resultResponse.getResult().equals("1")){
                             Toast.makeText(getApplicationContext(),
                                     R.string.sendSuccess, Toast.LENGTH_SHORT).show();
+                            getMessageAtIndex(1);
                         }
                     }
                     @Override
@@ -233,12 +234,13 @@ public class ChatActivity extends AppCompatActivity implements OnGestureListener
                 String username = getMessageResponse.getUsername();
                 String message1 = getMessageResponse.getMessage();
                 String date = getMessageResponse.getTime();
-                adapter.add(new DataProvider(position, username, message1, date));
+                adapter.add(new DataProvider(position, message1, username, date));
                 position = !position;
                 chat_text.setText("");
             }
             @Override
             public void failure(RetrofitError error) {
+                Log.e(TAG, error.toString());
             }
         });
     }
